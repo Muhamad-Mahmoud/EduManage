@@ -1,0 +1,35 @@
+﻿@model Department
+@{
+  ViewData["Title"] = "Edit Department";
+}
+
+<div class="form-container fade-in-up">
+  <div class="form-header">
+    <h1>Edit Department</h1>
+    <h4>Update department information</h4>
+  </div>
+
+  <form asp-controller="Department" asp-action="SaveEdit" method="post">
+    <!-- Hidden ID Field (Useful for Editing) -->
+    <input type="hidden" name="Id" value="@Model?.Id" />
+
+    <div class="form-section">
+      <div class="form-group">
+        <label class="form-label">Department Name</label>
+        <input type="text" value="@Model?.Name" id="Name" name="Name" class="form-control" required placeholder="Enter department name" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Manager</label>
+        <input type="text" value="@Model?.Manger" id="Manger" name="Manger" class="form-control" required placeholder="Enter manager name" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit">Update Department</button>
+      <a asp-controller="Department" asp-action="Index" class="btn-cancel">
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>

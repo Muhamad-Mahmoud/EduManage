@@ -1,0 +1,158 @@
+﻿@model List<Department>
+
+@{
+  ViewData["Title"] = "Department List";
+}
+
+<div class="data-container fade-in-up">
+  <!-- Header -->
+  <div class="data-header">
+    <h2>Department List</h2>
+    <a asp-controller="Department" asp-action="Add" class="add-btn">
+      Add New Department
+    </a>
+  </div>
+
+  <!-- Search Bar -->
+  @using (Html.BeginForm("Index", "Department", FormMethod.Get, new { @class = "search-container", novalidate = "novalidate" }))
+  {
+    <div class="search-form">
+      <label for="searchInput" class="form-label visually-hidden">Search Departments</label>
+      <div class="search-input-group">
+        @Html.TextBox(
+               "search",
+               ViewBag.Search as string,
+               new
+               {
+                 @class = "form-control",
+                 placeholder = "Search by name or manager",
+                 @id = "searchInput",
+                 aria_label = "Search departments",
+                 minlength = "2",
+                 required = "required"
+               })
+        <button type="submit" class="btn btn-primary">
+          Search
+        </button>
+      </div>
+      <div class="search-help-text">Enter at least 2 characters to search.</div>
+    </div>
+  }
+
+  <!-- Department Table -->
+  <div class="data-table">
+    <table class="table table-hover text-center align-middle">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Manager</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="departmentTableBody">
+        @foreach (var department in Model)
+        {
+          <tr>
+            <td>@department.Name</td>
+            <td>@department.Manger</td>
+            <td>
+              <div class="action-buttons">
+                <!-- Details Button -->
+                <a asp-action="Details"
+                   asp-controller="Instructor"
+                   asp-route-id="@department.Id"
+                   class="btn-details"
+                   aria-label="Details instructor @department.Name">
+                  Details
+                </a>
+                <a asp-action="Edit"
+                   asp-controller="Department"
+                   asp-route-id="@department.Id"
+                   class="btn-edit"
+                   aria-label="Edit @department.Name">
+                  Edit
+                </a>
+                <button type="button"
+                        class="btn-delete delete-btn"
+                        data-id="@department.Id"
+                        data-name="@department.Name"
+                        aria-label="Delete @department.Name">
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (!Model.Any())
+  {
+    <div class="empty-state">
+      <div class="empty-state-icon">⚠️</div>
+      <p class="empty-state-text">No departments found.</p>
+    </div>
+  }
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete "<strong id="departmentName"></strong>"?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        @using (Html.BeginForm("Delete", "Department", FormMethod.Post, new { id = "deleteForm" }))
+        {
+          @Html.AntiForgeryToken()
+          @Html.Hidden("id", "", new { @id = "deleteId" })
+          <button type="submit" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const deleteModalEl = document.getElementById('deleteModal');
+      const deleteModal = new bootstrap.Modal(deleteModalEl);
+      const nameDisplay = document.getElementById('departmentName');
+      const idInput = document.getElementById('deleteId');
+      const deleteForm = document.getElementById('deleteForm');
+      const confirmBtn = document.getElementById('confirmDeleteBtn');
+
+      // Client-side search filter
+      document.getElementById('searchInput').addEventListener('input', function () {
+        const value = this.value.toLowerCase();
+        document.querySelectorAll('#departmentTableBody tr').forEach(row => {
+          const name = row.cells[0].textContent.toLowerCase();
+          const manager = row.cells[1].textContent.toLowerCase();
+          row.style.display = (name.includes(value) || manager.includes(value)) ? '' : 'none';
+        });
+      });
+
+      // Show delete modal
+      document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          nameDisplay.textContent = button.dataset.name;
+          idInput.value = button.dataset.id;
+          deleteModal.show();
+        });
+      });
+
+      // Disable delete button on submit
+      deleteForm.addEventListener('submit', () => {
+        confirmBtn.disabled = true;
+      });
+    });
+  </script>
+}

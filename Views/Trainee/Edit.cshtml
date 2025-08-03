@@ -1,0 +1,67 @@
+﻿@model TraineeWithDepWithCourceViewModel
+@{
+	ViewData["Title"] = "Edit Trainee";
+}
+
+<div class="form-container fade-in-up">
+    <div class="form-header">
+        <h1>Edit Trainee</h1>
+        <h4>Update trainee information</h4>
+    </div>
+
+    @using (Html.BeginForm("SaveEdit", "Trainee", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-section" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "required" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Address, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", required = "required" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Grad, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Grad, new { @class = "form-control", required = "required" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ImageURL, new { @class = "form-label" })
+                    <input asp-for="ImageURL" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.departmentId, new { @class = "form-label" })
+                    @Html.DropDownListFor(m => m.departmentId,
+                             new SelectList(Model.DepartmentsList, "Id", "Name"),
+                             "Select Department",
+                             new { @class = "form-select" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-submit">Save Changes</button>
+            <a asp-controller="Trainee" asp-action="Index" class="btn btn-cancel">Back to List</a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

@@ -1,0 +1,76 @@
+﻿@model CrsListwithDepViewModel
+@{
+  ViewData["Title"] = "Add Course";
+}
+
+<div class="form-container fade-in-up">
+  <div class="form-header">
+    <h1>Add New Course</h1>
+    <h4>Create a new course in the system</h4>
+  </div>
+
+  <form asp-controller="Course" asp-action="SaveAdd" method="post" class="form-section">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label asp-for="Name" class="form-label">Course Name</label>
+          <input asp-for="Name" class="form-control" required />
+          <span asp-validation-for="Name" class="validation-error"></span>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label asp-for="Degree" class="form-label">Degree</label>
+          <input asp-for="Degree" class="form-control" required />
+          <span asp-validation-for="Degree" class="validation-error"></span>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label asp-for="MinDegree" class="form-label">Minimum Degree</label>
+          <input asp-for="MinDegree" class="form-control" required />
+          <span asp-validation-for="MinDegree" class="validation-error"></span>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label asp-for="Hours" class="form-label">Hours</label>
+          <input asp-for="Hours" class="form-control" required />
+          <span asp-validation-for="Hours" class="validation-error"></span>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label asp-for="DepartmentId" class="form-label">Department</label>
+          <select asp-for="DepartmentId"
+                  class="form-select"
+                  asp-items="@(new SelectList(Model.DepartmentsList, "Id", "Name"))">
+            <option value="0">Select Department</option>
+          </select>
+          <span asp-validation-for="DepartmentId" class="validation-error"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-submit">
+        Save Course
+      </button>
+      <a asp-controller="Course" asp-action="Index" class="btn btn-cancel">
+        Back to List
+      </a>
+    </div>
+  </form>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}

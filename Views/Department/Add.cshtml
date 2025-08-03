@@ -1,0 +1,36 @@
+﻿@model Department
+@{
+  ViewData["Title"] = "Add Department";
+}
+
+<div class="form-container fade-in-up">
+  <div class="form-header">
+    <h1>Add New Department</h1>
+    <h4>Create a new academic department</h4>
+  </div>
+
+  @using (Html.BeginForm("SaveAdd", "Department", FormMethod.Post))
+  {
+    <!-- Hidden ID Field -->
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-section">
+      <div class="form-group">
+        @Html.LabelFor(m => m.Name, "Department Name", new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "required", placeholder = "Enter department name" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "validation-error" })
+      </div>
+
+      <div class="form-group">
+        @Html.LabelFor(m => m.Manger, "Manager", new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Manger, new { @class = "form-control", required = "required", placeholder = "Enter manager name" })
+        @Html.ValidationMessageFor(m => m.Manger, "", new { @class = "validation-error" })
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit">Save Department</button>
+      @Html.ActionLink("Cancel", "Index", "Department", null, new { @class = "btn-cancel" })
+    </div>
+  }
+</div>

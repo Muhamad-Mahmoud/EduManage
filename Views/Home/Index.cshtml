@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="hero-section fade-in-up">
+    <h1 class="text-gradient">Welcome to EduManage</h1>
+    <p>Your comprehensive educational management system designed to streamline academic operations and enhance learning experiences.</p>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="row fade-in-up">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-hover h-100">
+            <div class="card-header">
+                <h5 class="mb-0">Department Management</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Efficiently manage academic departments, assign managers, and organize your educational structure.</p>
+                <a asp-controller="Department" asp-action="Index" class="btn btn-primary">View Departments</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-hover h-100">
+            <div class="card-header">
+                <h5 class="mb-0">Course Administration</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Create and manage courses with detailed information including degrees, hours, and requirements.</p>
+                <a asp-controller="Course" asp-action="Index" class="btn btn-primary">View Courses</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-hover h-100">
+            <div class="card-header">
+                <h5 class="mb-0">Student & Instructor Management</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Manage trainees and instructors with comprehensive profiles and academic tracking.</p>
+                <a asp-controller="Trainee" asp-action="Index" class="btn btn-primary">View Trainees</a>
+            </div>
+        </div>
+    </div>
+</div>

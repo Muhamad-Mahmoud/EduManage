@@ -1,0 +1,165 @@
+﻿@model List<Trainee>
+@{
+	ViewData["Title"] = "Trainee List";
+}
+
+<div class="data-container fade-in-up">
+	<!-- Header -->
+	<div class="data-header">
+		<h2>Trainee List</h2>
+		<a asp-controller="Trainee" asp-action="Add" class="add-btn">
+			Add New Trainee
+		</a>
+	</div>
+
+	<!-- Search Bar -->
+	@using (Html.BeginForm("Index", "Trainee", FormMethod.Get, new { @class = "search-container", novalidate = "novalidate" }))
+	{
+		<div class="search-form">
+			<label for="searchInput" class="form-label visually-hidden">Search Trainees</label>
+			<div class="search-input-group">
+				@Html.TextBox(
+					"search",
+					ViewBag.Search as string,
+					new
+					{
+						@class = "form-control",
+						placeholder = "Search by name, address, or grade",
+						@id = "searchInput",
+						aria_label = "Search trainees",
+						minlength = "2",
+						required = "required"
+					})
+				<button type="submit" class="btn btn-primary">
+					Search
+				</button>
+			</div>
+			<div class="search-help-text">Enter at least 2 characters to search.</div>
+		</div>
+	}
+
+	<!-- Trainee Table -->
+	<div class="data-table">
+		<table class="table table-hover text-center align-middle">
+			<thead>
+				<tr>
+					<th scope="col">Image</th>
+					<th scope="col">Name</th>
+					<th scope="col">Address</th>
+					<th scope="col">Grade</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody id="traineeTableBody">
+				@foreach (var trainee in Model)
+				{
+					<tr>
+						<td>
+							@if (!string.IsNullOrEmpty(trainee.ImageURL))
+							{
+								<img src="/Images/@trainee.ImageURL" alt="Photo of @trainee.Name" style="height:60px; border-radius: 50%; object-fit: cover;" />
+							}
+							else
+							{
+								<div style="height:60px; width:60px; background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #6c757d; font-size: 0.75rem;">
+									No Photo
+								</div>
+							}
+						</td>
+						<td>@trainee.Name</td>
+						<td>@trainee.Address</td>
+						<td>@trainee.Grad</td>
+						<td>
+							<div class="action-buttons">
+								<a asp-action="Edit"
+								   asp-controller="Trainee"
+								   asp-route-id="@trainee.Id"
+								   class="btn-edit"
+								   aria-label="Edit @trainee.Name">
+									Edit
+								</a>
+								<button type="button"
+										class="btn-delete delete-btn"
+										data-id="@trainee.Id"
+										data-name="@trainee.Name"
+										aria-label="Delete @trainee.Name">
+									Delete
+								</button>
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
+	@if (!Model.Any())
+	{
+		<div class="empty-state">
+			<div class="empty-state-icon">📋</div>
+			<p class="empty-state-text">No trainees found.</p>
+		</div>
+	}
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header bg-danger text-white">
+				<h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+				<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				Are you sure you want to delete "<strong id="traineeName"></strong>"?
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+				@using (Html.BeginForm("Delete", "Trainee", FormMethod.Post, new { id = "deleteForm" }))
+				{
+					@Html.AntiForgeryToken()
+					@Html.Hidden("id", "", new { @id = "deleteId" })
+					<button type="submit" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const deleteModalEl = document.getElementById('deleteModal');
+			const deleteModal = new bootstrap.Modal(deleteModalEl);
+			const nameDisplay = document.getElementById('traineeName');
+			const idInput = document.getElementById('deleteId');
+			const deleteForm = document.getElementById('deleteForm');
+			const confirmBtn = document.getElementById('confirmDeleteBtn');
+
+			// Client-side search filter
+			document.getElementById('searchInput').addEventListener('input', function () {
+				const value = this.value.toLowerCase();
+				document.querySelectorAll('#traineeTableBody tr').forEach(row => {
+					const name = row.cells[1].textContent.toLowerCase();
+					const address = row.cells[2].textContent.toLowerCase();
+					const grade = row.cells[3].textContent.toLowerCase();
+					row.style.display = (name.includes(value) || address.includes(value) || grade.includes(value)) ? '' : 'none';
+				});
+			});
+
+			// Show delete modal
+			document.querySelectorAll('.delete-btn').forEach(button => {
+				button.addEventListener('click', () => {
+					nameDisplay.textContent = button.dataset.name;
+					idInput.value = button.dataset.id;
+					deleteModal.show();
+				});
+			});
+
+			// Disable delete button on submit
+			deleteForm.addEventListener('submit', () => {
+				confirmBtn.disabled = true;
+			});
+		});
+	</script>
+}

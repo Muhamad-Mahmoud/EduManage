@@ -1,0 +1,68 @@
+﻿@model InstructorWithCrsListViewModel
+@{
+    ViewData["Title"] = "Edit Instructor";
+}
+
+<div class="form-container fade-in-up">
+    <div class="form-header">
+        <h1>Edit Instructor</h1>
+        <h4>Update instructor information</h4>
+    </div>
+
+    <form asp-controller="Instructor" asp-action="SaveEdit" method="post" class="form-section">
+        <input type="hidden" name="Id" value="@Model?.Id" />
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Name" class="form-label">Instructor Name</label>
+                    <input asp-for="Name" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Address" class="form-label">Address</label>
+                    <input asp-for="Address" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Salary" class="form-label">Salary</label>
+                    <input asp-for="Salary" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="ImageURL" class="form-label">Image URL</label>
+                    <input asp-for="ImageURL" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Course</label>
+                    <select asp-for="CourseId" class="form-select" asp-items="@(new SelectList(Model?.CoursesList ?? new List<Course>(), "Id", "Name"))">
+                        <option value="">Select Course</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Department</label>
+                    <select asp-for="DepartmentId" class="form-select" asp-items="@(new SelectList(Model?.DepartmentsList ?? new List<Department>(), "Id", "Name"))">
+                        <option value="">Select Department</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-submit">Save Changes</button>
+            <a asp-controller="Instructor" asp-action="Index" class="btn btn-cancel">Back to List</a>
+        </div>
+    </form>
+</div>
