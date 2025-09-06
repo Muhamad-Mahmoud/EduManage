@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace MVC02.Models
+namespace EDU.Models
 {
   public class Department
   {

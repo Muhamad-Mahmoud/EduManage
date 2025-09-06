@@ -27,8 +27,7 @@ bld/
 
 ## Visual Studio cache/options directory
 .vs/
-
-## MSTest test Results
++## MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 

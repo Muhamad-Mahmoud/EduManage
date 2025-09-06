@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace MVC02.Models
+namespace EDU.Models
 {
     public class DataRangeValidatorAttribute : ValidationAttribute
     {

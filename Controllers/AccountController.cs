@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MVC02.Models;
-using MVC02.ViewModel;
+using EDU.Models;
+using EDU.ViewModel;
 
-namespace MVC02.Controllers
+namespace EDU.Controllers
 {
     public class AccountController : Controller
     {
@@ -18,7 +18,10 @@ namespace MVC02.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register() => View("Register");
+        public IActionResult Register()
+        {
+            return View(new RegisterViewModel());
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -26,25 +29,41 @@ namespace MVC02.Controllers
         {
             if (ModelState.IsValid) 
             {
-                var appUser = new ApplicationUser { UserName = model.UserName };
+                var appUser = new ApplicationUser 
+                { 
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber
+                };
+                
                 var result = await _userManager.CreateAsync(appUser, model.Password);
 
                 if (result.Succeeded)
                 {
+                    // Add additional user properties if needed
+                    if (!string.IsNullOrEmpty(model.Address))
+                    {
+                        // You can extend ApplicationUser to include Address property
+                        // or store it in a separate table
+                    }
+                    
                     await _signInManager.SignInAsync(appUser, isPersistent: false);
-                    return RedirectToAction("Index", "Department");
+                    TempData["SuccessMessage"] = "Registration successful! Welcome to our platform.";
+                    return RedirectToAction("Index", "Home");
                 }
+                
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
             }
+            
             return View("Register", model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignOut()
+        public new async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
@@ -62,7 +81,7 @@ namespace MVC02.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Department");
+                    return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Invalid login attempt.");
             }

@@ -1,45 +1,111 @@
-﻿@model MVC02.ViewModel.LoginViewModel
+﻿@model EDU.ViewModel.LoginViewModel
 
 @{
     ViewData["Title"] = "Login";
+    Layout = "_Layout";
 }
 
-<div class="auth-container fade-in-up">
-    <div class="auth-header">
-        <h1>Login</h1>
-        <h4>Access Your Account</h4>
-    </div>
-
-    <form asp-action="SaveLogin" class="auth-form">
-        <div asp-validation-summary="ModelOnly" class="validation-error"></div>
-        
-        <div class="form-group">
-            <label asp-for="UserName" class="form-label">Username</label>
-            <input asp-for="UserName" class="form-control" placeholder="Enter your username" />
-            <span asp-validation-for="UserName" class="validation-error"></span>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="my-0">Welcome Back</h3>
+                    <p class="mb-0">Sign in to your account</p>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="SaveLogin" method="post" class="needs-validation" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        
+                        <div class="form-floating mb-3">
+                            <input asp-for="UserName" class="form-control" placeholder="Username or Email" required />
+                            <label asp-for="UserName">Username or Email</label>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-floating mb-3">
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Password" required />
+                            <label asp-for="Password">Password</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input asp-for="RememberMe" class="form-check-input" type="checkbox" />
+                            <label asp-for="RememberMe" class="form-check-label">
+                                Remember me
+                            </label>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center py-3">
+                    <div class="small">
+                        <a asp-action="Register" class="text-decoration-none">
+                            Don't have an account? Register here
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="form-group">
-            <label asp-for="Password" class="form-label">Password</label>
-            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
-            <span asp-validation-for="Password" class="validation-error"></span>
-        </div>
-        
-        <div class="form-check">
-            <input class="form-check-input" asp-for="RememberMe" />
-            <label class="form-check-label" asp-for="RememberMe">
-                Remember me
-            </label>
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Sign In</button>
-    </form>
-
-    <div class="auth-links">
-        <a asp-action="Register">Don't have an account? Create one</a>
     </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Bootstrap form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
 }
+
+<style>
+    .card {
+        border-radius: 15px;
+    }
+    
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label {
+        opacity: .65;
+        transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+    }
+    
+    .btn-primary {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        border: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    }
+    
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+    }
+    
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+</style>

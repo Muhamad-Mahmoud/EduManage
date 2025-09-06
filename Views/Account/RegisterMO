@@ -1,4 +1,4 @@
-﻿@model MVC02.ViewModel.RegisterViewModel
+﻿@model EDU.ViewModel.RegisterViewModel
 
 @{
     ViewData["Title"] = "Register";

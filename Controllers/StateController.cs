@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MVC02.Controllers;
+namespace EDU.Controllers;
 
 public class StateController : Controller
 {

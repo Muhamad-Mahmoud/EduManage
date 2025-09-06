@@ -1,0 +1,160 @@
+﻿@model EDU.ViewModel.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="my-0">Create Account</h3>
+                    <p class="mb-0">Join our educational platform</p>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="SaveRegister" method="post" class="needs-validation" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        
+                        <div class="form-floating mb-3">
+                            <input asp-for="UserName" class="form-control" placeholder="Username" required />
+                            <label asp-for="UserName">Username</label>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control" placeholder="Email address" type="email" required />
+                            <label asp-for="Email">Email Address</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-floating mb-3">
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Password" required />
+                            <label asp-for="Password">Password</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <div class="form-text">
+                                <small class="text-muted">Password must be at least 6 characters long.</small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-floating mb-3">
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password" required />
+                            <label asp-for="ConfirmPassword">Confirm Password</label>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-floating mb-3">
+                            <input asp-for="Address" class="form-control" placeholder="Address" />
+                            <label asp-for="Address">Address (Optional)</label>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-floating mb-3">
+                            <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number" />
+                            <label asp-for="PhoneNumber">Phone Number (Optional)</label>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>Create Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center py-3">
+                    <div class="small">
+                        <a asp-action="Login" class="text-decoration-none">
+                            Already have an account? Sign in here
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Bootstrap form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+        
+        // Password strength indicator
+        document.getElementById('Password').addEventListener('input', function() {
+            const password = this.value;
+            const strength = getPasswordStrength(password);
+            updatePasswordStrengthIndicator(strength);
+        });
+        
+        function getPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (password.match(/[a-z]/)) strength++;
+            if (password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+            return strength;
+        }
+        
+        function updatePasswordStrengthIndicator(strength) {
+            const indicator = document.getElementById('password-strength');
+            if (!indicator) return;
+            
+            const colors = ['#dc3545', '#fd7e14', '#ffc107', '#20c997', '#198754'];
+            const labels = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
+            
+            indicator.style.width = (strength * 20) + '%';
+            indicator.style.backgroundColor = colors[strength - 1] || '#dc3545';
+            indicator.setAttribute('aria-valuenow', strength);
+        }
+    </script>
+}
+
+<style>
+    .card {
+        border-radius: 15px;
+    }
+    
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label {
+        opacity: .65;
+        transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+    }
+    
+    .btn-primary {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        border: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    }
+    
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+    }
+    
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+</style>

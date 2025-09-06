@@ -2,10 +2,14 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace MVC02.Models
+namespace EDU.Models
 {
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
+        public AppDbContext()
+        {
+        }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Course> Courses { get; set; }

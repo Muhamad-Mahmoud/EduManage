@@ -1,6 +1,6 @@
-﻿using MVC02.Models;
+﻿using EDU.Models;
 
-namespace MVC02.Repository.IRepository
+namespace EDU.Repository.IRepository
 {
     public interface IBaseRepository<T> where T : class
     {

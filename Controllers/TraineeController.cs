@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MVC02.Models;
-using MVC02.ViewModel;
+using EDU.Models;
+using EDU.ViewModel;
 
-namespace MVC02.Controllers;
+namespace EDU.Controllers;
 
 public class TraineeController : Controller
 {

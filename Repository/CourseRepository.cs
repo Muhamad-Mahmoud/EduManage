@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using MVC02.Models;
-using MVC02.Repository.IRepository;
+using EDU.Models;
+using EDU.Repository.IRepository;
 
-namespace MVC02.Repository;
+namespace EDU.Repository;
 
 public class CourseRepository : BaseRepository<Course>, ICourseRepository
 {

@@ -1,7 +1,7 @@
-using MVC02.Models;
+using EDU.Models;
 using System.Collections.Generic;
 
-namespace MVC02.Repository.IRepository
+namespace EDU.Repository.IRepository
 {
 public interface ICourseRepository : IBaseRepository<Course>
 {

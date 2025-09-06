@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MVC02.Models;
+namespace EDU.Models;
 
 public class UninqueNameAttribute : ValidationAttribute
 {

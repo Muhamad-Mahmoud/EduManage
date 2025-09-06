@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace MVC02.Filters;
+namespace EDU.Filters;
 
 public class HandleErrorAttribute : Attribute, IExceptionFilter 
 {

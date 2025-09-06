@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MVC02.Models;
-using MVC02.Repository;
-using MVC02.Repository.IRepository;
-using MVC02.ViewModel;
+using EDU.Models;
+using EDU.Repository;
+using EDU.Repository.IRepository;
+using EDU.ViewModel;
 
-namespace MVC02.Controllers;
+namespace EDU.Controllers;
 
 public class InstructorController : Controller
 {

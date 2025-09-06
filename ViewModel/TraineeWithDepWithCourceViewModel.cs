@@ -1,7 +1,7 @@
-using MVC02.Models;
+using EDU.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace MVC02.ViewModel;
+namespace EDU.ViewModel;
 
 public class TraineeWithDepWithCourceViewModel
 {

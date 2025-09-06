@@ -1,6 +1,6 @@
-using MVC02.Models;
+using EDU.Models;
 
-namespace MVC02.ViewModel;
+namespace EDU.ViewModel;
 
 public class DepartmentListViewModel
 {
