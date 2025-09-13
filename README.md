@@ -57,9 +57,3 @@ git branch -M main
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-## License
-
-[MIT](LICENSE)
-=======
-# EduManage
->>>>>>> a27406c38f522838d9514634d93a616285e1c5e3
