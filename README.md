@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Course Management System
 
 A comprehensive course management system built with ASP.NET Core Razor Pages.
