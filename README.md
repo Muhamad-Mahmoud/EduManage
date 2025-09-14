@@ -1,4 +1,4 @@
-# Course Management System
+# Education Management System
 
 A comprehensive course management system built with ASP.NET Core Razor Pages.
 
